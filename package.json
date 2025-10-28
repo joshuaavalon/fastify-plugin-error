@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "private": true,
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
@@ -20,6 +19,20 @@
     "url": "https://github.com/joshuaavalon/fastify-plugin-error/issues"
   },
   "homepage": "https://github.com/joshuaavalon/fastify-plugin-error#readme",
+  "imports": {},
+  "exports": {
+    ".": {
+      "import": "./dist/index.js"
+    }
+  },
+  "keywords": [
+    "fastify",
+    "fastify-plugin"
+  ],
+  "files": [
+    "dist/**/*",
+    "!dist/**/__tests__/**/*"
+  ],
   "devDependencies": {
     "@joshuaavalon/eslint-config-typescript": "^10.0.0",
     "@types/node": "^24.9.1",
@@ -30,6 +43,7 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "fastify-plugin": "^5.1.0"
+    "fastify-plugin": "^5.1.0",
+    "typebox": "^1.0.43"
   }
 }
