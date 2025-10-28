@@ -6,7 +6,7 @@ export type TemplatePluginOptions = {
   value: string;
 };
 
-export const name = "@joshuaavalon/fastify-plugin-template";
+export const name = "@joshuaavalon/fastify-plugin-error";
 
 export default fp<TemplatePluginOptions>(
   async (app, opts) => {

@@ -1,5 +1,5 @@
 {
-  "name": "@joshuaavalon/fastify-plugin-template",
+  "name": "@joshuaavalon/fastify-plugin-error",
   "version": "1.0.0",
   "description": "",
   "type": "module",
@@ -14,12 +14,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/joshuaavalon/fastify-plugin-template.git"
+    "url": "git+https://github.com/joshuaavalon/fastify-plugin-error.git"
   },
   "bugs": {
-    "url": "https://github.com/joshuaavalon/fastify-plugin-template/issues"
+    "url": "https://github.com/joshuaavalon/fastify-plugin-error/issues"
   },
-  "homepage": "https://github.com/joshuaavalon/fastify-plugin-template#readme",
+  "homepage": "https://github.com/joshuaavalon/fastify-plugin-error#readme",
   "devDependencies": {
     "@joshuaavalon/eslint-config-typescript": "^10.0.0",
     "@types/node": "^24.9.1",
