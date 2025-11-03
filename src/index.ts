@@ -8,24 +8,26 @@ import type { RouteGlobalErrorSchemasOptions } from "#hook";
 
 export type ErrorPluginOptions = {
   /**
+   * `false` to disable global error schemas.
    * @default true
    */
   enableGlobalSchemas?: boolean;
 
   /**
-   * `true` to add {@link FastifyError} formatter
+   * `true` to add default {@link FastifyError} formatter.
    * @default true
    */
   formatFastify?: boolean;
 
   /**
-   * `true` to add {@link HttpError} formatter
+   * `true` to add default {@link HttpError} formatter.
    * @default true
    */
   formatHttp?: boolean;
 
   /**
-   * @default [400, 401, 403, 500]
+   * {@link HttpError} that is formatted by default {@link HttpError} formatter.
+   * @default [400, 401, 403, 404, 500]
    */
   httpErrorSchemas?: number[];
 };
