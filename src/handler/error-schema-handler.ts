@@ -23,7 +23,7 @@ export class ErrorSchemaHandler {
       enableGlobalSchemas = true,
       formatFastify = true,
       formatHttp = true,
-      httpErrorSchemas = [400, 401, 403, 500]
+      httpErrorSchemas = [400, 401, 403, 404, 500]
     } = opts;
     this.errorSchemas = {};
     this.formatters = [];

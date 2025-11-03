@@ -12,16 +12,18 @@ describe("onRoute", () => {
   before(async () => {
     app = await fastify();
     await app.register(plugin);
-    // TODO: handle schme
     app.get("/disable-global-error-schema", { globalErrorSchemas: "disable" }, async (_req, res) => {
       res.status(500).send({ success: true });
     });
 
-    app.get("/default-global-error-schema", async (_req, res) => {
+    app.get("/default-global-error-schema", { schema: { response: { 500: Type.Object({ success: true }) } } }, async (_req, res) => {
       res.status(500).send({ success: true });
     });
 
-    app.get("/overwrite-global-error-schema", async (_req, res) => {
+    app.get("/overwrite-global-error-schema", {
+      globalErrorSchemas: "overwrite",
+      schema: { response: { 500: Type.Object({ success: true }) } }
+    }, async (_req, res) => {
       res.status(500).send({ success: true });
     });
 
@@ -39,7 +41,9 @@ describe("onRoute", () => {
       method: "GET",
       path: "/default-global-error-schema"
     });
+    const json = await res.json();
     assert.equal(res.statusCode, 500);
+    assert.equal(json.success, true);
   });
 
   it("should overwrite global error schema", async () => {
@@ -47,7 +51,9 @@ describe("onRoute", () => {
       method: "GET",
       path: "/overwrite-global-error-schema"
     });
+    const json = await res.json();
     assert.equal(res.statusCode, 500);
+    assert.equal(json.success, true);
   });
 
   it("should disable global error schema", async () => {
