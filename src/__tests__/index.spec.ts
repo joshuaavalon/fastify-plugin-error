@@ -54,6 +54,18 @@ describe("@joshuaavalon/fastify-plugin-error", () => {
     assert.ok(json.data.message);
   });
 
+  it("should format not found", async () => {
+    const res = await app.inject({
+      method: "GET",
+      path: "/not-found"
+    });
+    const json = await res.json();
+    assert.equal(res.statusCode, 404);
+    assert.equal(json.success, false);
+    assert.equal(json.code, "NotFound");
+    assert.ok(json.data.message);
+  });
+
   it("should format FST_ERR_CTP_EMPTY_JSON_BODY", async () => {
     const res = await app.inject({
       body: "",

@@ -2,7 +2,7 @@ import { fastifyErrorMapping } from "#fastify";
 import { fastifyErrorFormatter, httpErrorFormatter } from "#formatter";
 import { statusCodes } from "#http";
 import { createErrorResponseSchema, createHttpErrorResponseSchema } from "#schema";
-import type { FastifyReply, FastifyRequest } from "fastify";
+import type { FastifyReply } from "fastify";
 import type { TSchema } from "typebox";
 import type { ErrorFormatter } from "#formatter";
 
@@ -51,16 +51,16 @@ export class ErrorSchemaHandler {
     this.formatters.unshift(formatter);
   }
 
-  public async format(err: Error, req: FastifyRequest, res: FastifyReply): Promise<void> {
+  public async format(err: Error, res: FastifyReply): Promise<void> {
     for (const formatter of this.formatters) {
-      const responseJson = await formatter.call(req.server, err);
+      const responseJson = await formatter.call(res.server, err);
       if (!responseJson) {
         continue;
       }
       const { status, ...data } = responseJson;
       return res.status(status).send(data);
     }
-    req.log.error({ err }, "Unformatted error");
+    res.log.error({ err }, "Unformatted error");
     return res.status(500).send({
       code: "InternalServerError",
       data: { message: "Internal Server Error" },

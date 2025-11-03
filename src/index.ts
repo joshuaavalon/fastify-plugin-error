@@ -17,11 +17,11 @@ export default fp<ErrorPluginOptions>(
   async (app, opts) => {
     app.addHook("onRoute", onRoute);
     app.decorate("errorSchemas", new ErrorSchemaHandler(opts));
-    app.setErrorHandler(function (error, req, res) {
-      return this.errorSchemas.format(error, req, res);
+    app.setErrorHandler(function (error, _req, res) {
+      return this.errorSchemas.format(error, res);
     });
-    app.setNotFoundHandler(function (req, res) {
-      return this.errorSchemas.format(HttpError.notFound(), req, res);
+    app.setNotFoundHandler(function (_req, res) {
+      return this.errorSchemas.format(HttpError.notFound(), res);
     });
   },
   {

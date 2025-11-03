@@ -12,7 +12,7 @@ describe("onRoute", () => {
   before(async () => {
     app = await fastify();
     await app.register(plugin);
-
+    // TODO: handle schme
     app.get("/disable-global-error-schema", { globalErrorSchemas: "disable" }, async (_req, res) => {
       res.status(500).send({ success: true });
     });
