@@ -2,12 +2,31 @@ import fp from "fastify-plugin";
 import { ErrorSchemaHandler } from "#handler";
 import { onRoute } from "#hook";
 import { HttpError } from "#http";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+import type { FastifyError } from "fastify";
 import type { RouteGlobalErrorSchemasOptions } from "#hook";
 
 export type ErrorPluginOptions = {
+  /**
+   * @default true
+   */
   enableGlobalSchemas?: boolean;
+
+  /**
+   * `true` to add {@link FastifyError} formatter
+   * @default true
+   */
   formatFastify?: boolean;
+
+  /**
+   * `true` to add {@link HttpError} formatter
+   * @default true
+   */
   formatHttp?: boolean;
+
+  /**
+   * @default [400, 401, 403, 500]
+   */
   httpErrorSchemas?: number[];
 };
 
@@ -32,7 +51,8 @@ export default fp<ErrorPluginOptions>(
   }
 );
 
-export type { RouteGlobalErrorSchemasOptions as RouteErrorSchemaOptions } from "#hook";
+export type { ErrorFormatter } from "#formatter";
+export type { RouteGlobalErrorSchemasOptions } from "#hook";
 
 declare module "fastify" {
   interface FastifyInstance {
