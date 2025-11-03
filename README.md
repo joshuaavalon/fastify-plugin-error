@@ -1,3 +1,3 @@
 # @joshuaavalon/fastify-plugin-error
 
-Template repository for Fastify Plugin.
+Fastify plugin for handling global errors formatting and error schemas.

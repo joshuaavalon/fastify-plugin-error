@@ -1,12 +1,12 @@
 {
   "name": "@joshuaavalon/fastify-plugin-error",
   "version": "1.0.0",
-  "description": "",
+  "description": "Fastify plugin for handling global errors formatting and error schemas.",
   "type": "module",
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "tsc",
-    "test": "node --env-file-if-exists=.env --experimental-test-coverage --test \"./dist/**/__tests__/*.{spec,test}.js\"",
+    "test": "node --experimental-test-coverage --test \"./dist/**/__tests__/*.{spec,test}.js\"",
     "lint": "eslint"
   },
   "author": "Joshua Avalon",
@@ -19,10 +19,35 @@
     "url": "https://github.com/joshuaavalon/fastify-plugin-error/issues"
   },
   "homepage": "https://github.com/joshuaavalon/fastify-plugin-error#readme",
-  "imports": {},
+  "imports": {
+    "#fastify": {
+      "import": "./dist/fastify/index.js"
+    },
+    "#formatter": {
+      "import": "./dist/formatter/index.js"
+    },
+    "#handler": {
+      "import": "./dist/handler/index.js"
+    },
+    "#hook": {
+      "import": "./dist/hook/index.js"
+    },
+    "#http": {
+      "import": "./dist/http/index.js"
+    },
+    "#schema": {
+      "import": "./dist/schema/index.js"
+    },
+    "#util": {
+      "import": "./dist/util/index.js"
+    }
+  },
   "exports": {
     ".": {
       "import": "./dist/index.js"
+    },
+    "./http": {
+      "import": "./dist/http/index.js"
     }
   },
   "keywords": [

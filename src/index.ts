@@ -1,17 +1,28 @@
 import fp from "fastify-plugin";
-import type {} from "fastify";
+import { ErrorSchemaHandler } from "#handler";
+import { onRoute } from "#hook";
+import { HttpError } from "#http";
+import type { RouteGlobalErrorSchemasOptions } from "#hook";
 
-
-export type TemplatePluginOptions = {
-  value: string;
+export type ErrorPluginOptions = {
+  enableGlobalSchemas?: boolean;
+  formatFastify?: boolean;
+  formatHttp?: boolean;
+  httpErrorSchemas?: number[];
 };
 
 export const name = "@joshuaavalon/fastify-plugin-error";
 
-export default fp<TemplatePluginOptions>(
+export default fp<ErrorPluginOptions>(
   async (app, opts) => {
-    const { value } = opts;
-    app.decorate("hello", () => value);
+    app.addHook("onRoute", onRoute);
+    app.decorate("errorSchemas", new ErrorSchemaHandler(opts));
+    app.setErrorHandler(function (error, req, res) {
+      return this.errorSchemas.format(error, req, res);
+    });
+    app.setNotFoundHandler(function (req, res) {
+      return this.errorSchemas.format(HttpError.notFound(), req, res);
+    });
   },
   {
     decorators: {},
@@ -21,8 +32,23 @@ export default fp<TemplatePluginOptions>(
   }
 );
 
+export type { RouteGlobalErrorSchemasOptions as RouteErrorSchemaOptions } from "#hook";
+
 declare module "fastify" {
   interface FastifyInstance {
-    readonly hello: () => string;
+    readonly errorSchemas: ErrorSchemaHandler;
+  }
+
+  interface RouteOptions extends ErrorPluginRouteOptions {
+  }
+
+  interface RouteShorthandOptions extends ErrorPluginRouteOptions {
+  }
+
+  interface FastifyContextConfig extends ErrorPluginRouteOptions {
+  }
+
+  interface ErrorPluginRouteOptions {
+    globalErrorSchemas?: RouteGlobalErrorSchemasOptions;
   }
 }
